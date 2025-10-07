@@ -9,7 +9,7 @@ import java.net.Socket;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        
+
         ServerSocket ss = new ServerSocket(3000);
         Socket s = ss.accept();
         System.out.println("Connected.");
@@ -17,8 +17,20 @@ public class Main {
         BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
         PrintWriter out = new PrintWriter(s.getOutputStream(), true);
 
-        String myString = in.readLine();
-        out.println(myString.toUpperCase());
+        while (true) {
+            String myString = in.readLine();
+
+            if(myString.equals("!")){
+                ss.close();
+                break;
+            }
+
+            String convertita = myString.toUpperCase();
+            System.out.println(convertita);
+            out.println(convertita);
+            
+        }
+        
         
     }
 }
