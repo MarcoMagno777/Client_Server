@@ -24,6 +24,7 @@ public class Main {
             String frase = sc.nextLine();
             if(frase.equals("exit")){
                 out.println("!");
+                s.close();
                 break;
             }
             out.println(frase);
