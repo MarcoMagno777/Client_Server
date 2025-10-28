@@ -20,17 +20,6 @@ public class Main {
 
         while(true){
 
-            System.out.println("Inserisci frase da converitre in maiuscolo");
-            String frase = sc.nextLine();
-            if(frase.equals("exit")){
-                out.println("!");
-                s.close();
-                break;
-            }
-            out.println(frase);
-            String risultato = in.readLine();
-            System.out.println("Stringa convertita: " + risultato);
-
         }
         
     }

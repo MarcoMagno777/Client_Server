@@ -24,14 +24,6 @@ public class ThreadSoc extends Thread{
                 BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
             
                 String myString = in.readLine();
-    
-                if(myString.equals("!")){
-                    break;
-                }
-    
-                String convertita = myString.toUpperCase();
-                System.out.println(convertita);
-                out.println(convertita);
                 
             }
 
