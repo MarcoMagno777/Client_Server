@@ -11,7 +11,7 @@ public class ThreadSoc extends Thread{
     
     private Socket s;
     private String password;
-    private ArrayList<Zone> zone;
+    private static ArrayList<Zona> zone;
     private boolean accesso;
 
     ThreadSoc(Socket s){
@@ -42,12 +42,22 @@ public class ThreadSoc extends Thread{
                         switch(parti[1]){
                             case "g":
 
+                                if(comandoCompleto(parti[2])){
+
+                                    out.println(inserimento(parti[2])); 
+
+                                }
+                                 else {
+                                    out.println("ERROR");
+                                 }
+
                                 break;
                             case "STATUS":
-
+                                out.println(stampaZone());
                                 break;
                             case "DIS":
-
+                                 disattiva();
+                                 out.println("OFF");
                                 break;
                             case "EXIT":
                                 out.println("BYE");
@@ -68,6 +78,7 @@ public class ThreadSoc extends Thread{
 
                     if(parti[0].equals("PIN") && pinValido(parti[1])){
                         accesso = true;
+                        out.println("WELCOME");
                     }
                      else {
                         out.println("ERROR");
@@ -90,11 +101,53 @@ public class ThreadSoc extends Thread{
         return password.equals(pin);
     }
 
+    private String inserimento(String parte){
+
+        for(Zona z : zone){
+            if(z.getNome().equals(parte)){
+                if(z.getStato()){
+                    return "ALREADY";
+                }
+                 else {
+                    z.setStato(true);
+                    return "ON";
+                 }
+            }
+        }
+
+        return "ERROR";
+
+    }
+
+    private void disattiva(){
+
+        for(Zona z : zone){
+            z.setStato(false);
+        }
+
+    }
+
+    private String stampaZone(){
+
+        String status = "";
+
+        for(Zona z : zone){
+            status += z.getNome();
+            if(z.getStato()){
+                status += " ON, ";
+            }
+             else {
+                status += " OFF, ";
+             }
+        }
+        return status;
+    }
+
     private void iniziallizzaZone(){
-        Zone a = new Zone("A");
-        Zone b = new Zone("B");
-        Zone c = new Zone("C");
-        Zone d = new Zone("D");
+        Zona a = new Zona("A");
+        Zona b = new Zona("B");
+        Zona c = new Zona("C");
+        Zona d = new Zona("D");
 
         zone.add(a);
         zone.add(b);
@@ -104,10 +157,8 @@ public class ThreadSoc extends Thread{
 
     private boolean comandoCompleto(String parte){
 
-        String[] com = {"PIN", "g", "STATUS", "DIS"};
-
-        for (String c : com) {
-            if(parte.equals(c)){
+        for(Zona z : zone){
+            if(z.getNome().equals(parte)){
                 return true;
             }
         }

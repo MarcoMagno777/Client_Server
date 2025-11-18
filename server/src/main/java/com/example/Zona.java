@@ -1,11 +1,11 @@
 package com.example;
 
-public class Zone {
+public class Zona {
     
     private String nome;
     private boolean stato;
 
-    Zone(String nome){
+    Zona(String nome){
         this.nome = nome;
         stato = false;
     }
