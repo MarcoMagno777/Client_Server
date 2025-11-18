@@ -11,7 +11,6 @@ public class Main {
 
         while(true){
 
-            
             Socket s = ss.accept();
             System.out.println("Connected.");
             ThreadSoc t = new ThreadSoc(s);
