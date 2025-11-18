@@ -10,13 +10,15 @@ import java.util.ArrayList;
 public class ThreadSoc extends Thread{
     
     private Socket s;
-    private String password;
+    private static String password = "";
     private static ArrayList<Zona> zone;
     private boolean accesso;
 
     ThreadSoc(Socket s){
         this.s = s;
-        password = "12345";
+        if(password.isEmpty()){
+            password = "12345";
+        }
         zone = new ArrayList();
         accesso = false;
     }
@@ -63,6 +65,14 @@ public class ThreadSoc extends Thread{
                                 out.println("BYE");
                                 s.close();
                                 break;
+                            case "SETPIN":
+                                 if(pinNuovoValido(parti[2])){
+                                    out.println("OK");
+                                 }
+                                  else {
+                                    out.println("ERROR");
+                                  }
+                                 break;
                             default:
                                 out.println("ERROR");
                         }
@@ -85,15 +95,24 @@ public class ThreadSoc extends Thread{
                      }
 
                  }
-
-                
-                
+ 
             }
 
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+
+    }
+
+    private boolean pinNuovoValido(String parte){
+
+        if(!parte.isEmpty() && parte.length() == 5){
+            password = parte;
+            return true;
+        }
+
+        return false;
 
     }
 
